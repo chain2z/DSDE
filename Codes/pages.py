@@ -9,6 +9,7 @@ import plotly.express as px
 import util
 import os
 from sklearn.metrics import classification_report,ConfusionMatrixDisplay, confusion_matrix
+from pathlib import Path
 
 def readCSV(filepath , index = "Unnamed: 0"):
     df = pd.read_csv(filepath)
@@ -16,20 +17,20 @@ def readCSV(filepath , index = "Unnamed: 0"):
     df.drop(labels= index,axis = 1,inplace=True)
     return df
 
-PATH = os.path.dirname(os.path.dirname(__file__))
-DATA_PATH = f"{PATH}\\Datas"
-MODEL_PATH = f"{PATH}\\Model"
+PATH = Path(__file__).resolve().parent.parent
+DATA_PATH = PATH/"Datas"
+MODEL_PATH = PATH/"Model"
 
-df = readCSV(f"{DATA_PATH}\\data.csv")
-author_df = readCSV(f"{DATA_PATH}\\author_stats.csv")
-publisher_df = readCSV(f"{DATA_PATH}\\publisher_stats.csv")
-subject_area_df = readCSV(f"{DATA_PATH}\\subject_area_stats.csv")
-country_df = readCSV(f"{DATA_PATH}\\mapData.csv")
+df = readCSV(DATA_PATH/"data.csv")
+author_df = readCSV(DATA_PATH/"author_stats.csv")
+publisher_df = readCSV(DATA_PATH/"publisher_stats.csv")
+subject_area_df = readCSV(DATA_PATH/"subject_area_stats.csv")
+country_df = readCSV(DATA_PATH/"mapData.csv")
 
-lineChartDataCitations = readCSV(f"{DATA_PATH}\\line_chart_datesXcitations.csv", "date").fillna(0)
-lineChartDataPapers = readCSV(f"{DATA_PATH}\\line_chart_datesXpapers.csv", "date").fillna(0)
-networkData = readCSV(f"{DATA_PATH}\\authors_network.csv")
-countriesNetworkData = readCSV(f"{DATA_PATH}\\countries_network.csv")
+lineChartDataCitations = readCSV(DATA_PATH/"line_chart_datesXcitations.csv", "date").fillna(0)
+lineChartDataPapers = readCSV(DATA_PATH/"line_chart_datesXpapers.csv", "date").fillna(0)
+networkData = readCSV(DATA_PATH/"authors_network.csv")
+countriesNetworkData = readCSV(DATA_PATH/"countries_network.csv")
 
 df.sort_values(by="Publishing Date", ascending=True,inplace=True)
 
@@ -343,7 +344,7 @@ def AiPage():
     df = pd.DataFrame([d])
     result = ["unsuccessful" , "successful"]
 
-    model = joblib.load(f"{MODEL_PATH}/logreg_pipeline.joblib")
+    model = joblib.load(MODEL_PATH/"logreg_pipeline.joblib")
     st.subheader("AI Predictions:")
     st.write(f" Success Rate : {round(model.predict_proba(df)[0][1]*100 , 2)}%")
     st.write(f" The Paper is predicted to be {result[model.predict(df)[0]]}.")
