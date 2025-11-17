@@ -4,4 +4,4 @@ pandas
 plotly
 joblib
 networkx
-sklearn
+scikit-learn
