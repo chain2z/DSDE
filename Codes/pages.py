@@ -261,10 +261,10 @@ def CollaborationPage():
 
 
 def AiOverviewTab():
-    y_test = np.load(f"{DATA_PATH}\\y_test.npy")
-    y_train = np.load(f"{DATA_PATH}\\y_train.npy")
-    y_pred_test = np.load(f"{DATA_PATH}\\y_pred_test.npy")
-    y_pred_train = np.load(f"{DATA_PATH}\\y_pred_train.npy")
+    y_test = np.load(DATA_PATH/"y_test.npy")
+    y_train = np.load(DATA_PATH/"y_train.npy")
+    y_pred_test = np.load(DATA_PATH/"y_pred_test.npy")
+    y_pred_train = np.load(DATA_PATH/"y_pred_train.npy")
 
     train_report_dict = classification_report(y_train, y_pred_train, output_dict=True)
     test_report_dict = classification_report(y_test, y_pred_test, output_dict=True)
