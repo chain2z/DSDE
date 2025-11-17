@@ -132,3 +132,34 @@ def get_classification_report(d):
 
     report_df.loc["accuracy",["precision","recall", "support"]] = ["", "" , report_df.loc["macro avg" , "support"]]
     st.table(report_df)
+def getColumnsDict():
+    return {
+    "Identification / IDs": [
+        "prism:isbn", "isbn", "pubmed-id"
+    ],
+    "Source / Journal info": [
+        "srctype", "prism:publicationName", "sourcetitle",
+        "prism:volume", "prism:issueIdentifier", "publisher", "dc:publisher"
+    ],
+    "Dates": [
+        "prism:coverDate", "year", "month", "day"
+    ],
+    "Authorship": [
+        "author", "affiliation"
+    ],
+    "Keywords / Subject": [
+        "subject-area", "idxterms", "authkeywords", "author-keywords"
+    ],
+    "Text content": [
+        "dc:title", "dc:description", "abstracts"
+    ],
+    "Citations / Impact": [
+        "citedby-count"
+    ],
+    "Open access": [
+        "openaccess", "openaccessFlag"
+    ],
+    "Language / Misc": [
+        "language"
+    ],
+}
