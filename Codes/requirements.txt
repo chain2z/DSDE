@@ -5,3 +5,4 @@ plotly
 joblib
 networkx
 scikit-learn
+pathlib
