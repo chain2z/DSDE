@@ -21,6 +21,12 @@ PATH = Path(__file__).resolve().parent.parent
 DATA_PATH = PATH/"Datas"
 MODEL_PATH = PATH/"Model"
 
+#EDA
+citations = readCSV(DATA_PATH/"citationEDA.csv")
+yearXcitations = readCSV(DATA_PATH/"year_citations.csv", "year")
+yearXcitations = yearXcitations.rename(columns={"index": "year"}) 
+
+#Data Visualization
 df = readCSV(DATA_PATH/"data.csv")
 author_df = readCSV(DATA_PATH/"author_stats.csv")
 publisher_df = readCSV(DATA_PATH/"publisher_stats.csv")
@@ -40,6 +46,30 @@ unique_publisher = publisher_df["Publisher"].values
 unique_subject = subject_area_df["Subject Area"].values
 unique_country = country_df["Country"].values
 
+def EDAPage():
+    st.title("EDA")
+    st.space("medium")
+
+    st.header("Columns")
+    column_groups = util.getColumnsDict()
+    group = st.selectbox("Select column group", list(column_groups.keys()), key = "column groups")
+    selected_cols = column_groups[group]
+    st.write("<p style=\"font-size: 20px;\">Columns in this group: ", ", ".join(selected_cols),"</p>" , unsafe_allow_html=True)
+    #<p style="font-size: 26px;">This text is 26px</p>
+    st.space("large")
+
+    st.header("Citations")
+    st.subheader("citedby-count statistic")
+    st.dataframe(citations,hide_index=True)
+    st.space("small")
+
+    st.subheader("Relation between published year and citations")
+    chart = st.selectbox("Chart" , ["Bar Chart", "Line Chart"])
+    if(chart == "Bar Chart"):
+        st.bar_chart(yearXcitations,y_label="citedby-count average",x_label="published year")
+    elif(chart == "Line Chart"):
+        st.line_chart(yearXcitations,y_label="citedby-count average",x_label="published year")
+    
 def OverviewPage():
     MIN_DATE , MAX_DATE = dt.datetime.strptime(df["Publishing Date"].min(), "%Y-%m-%d"), dt.datetime.strptime(df["Publishing Date"].max(), "%Y-%m-%d")
     ROW_HEIGHT = 90
@@ -348,3 +378,4 @@ def AiPage():
     st.subheader("AI Predictions:")
     st.write(f" Success Rate : {round(model.predict_proba(df)[0][1]*100 , 2)}%")
     st.write(f" The Paper is predicted to be {result[model.predict(df)[0]]}.")
+    
