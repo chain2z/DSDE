@@ -50,7 +50,7 @@ unique_country = country_df["Country"].values
 
 def EDAPage():
     st.title("EDA")
-
+    st.text("Data Frame Shape : (20216, 27)")
     st.header("Columns")
     column_groups = util.getColumnsDict()
     group = st.selectbox("Select column group", list(column_groups.keys()), key = "column groups")
