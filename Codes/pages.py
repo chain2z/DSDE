@@ -6,6 +6,7 @@ import datetime as dt
 import joblib
 import pandas as pd
 import plotly.express as px
+import plotly.graph_objects as go
 import util
 import os
 from sklearn.metrics import classification_report,ConfusionMatrixDisplay, confusion_matrix
@@ -25,6 +26,7 @@ MODEL_PATH = PATH/"Model"
 citations = readCSV(DATA_PATH/"citationEDA.csv")
 yearXcitations = readCSV(DATA_PATH/"year_citations.csv", "year")
 yearXcitations = yearXcitations.rename(columns={"index": "year"}) 
+missingData = readCSV(DATA_PATH/"missing.csv")
 
 #Data Visualization
 df = readCSV(DATA_PATH/"data.csv")
@@ -48,16 +50,24 @@ unique_country = country_df["Country"].values
 
 def EDAPage():
     st.title("EDA")
-    st.space("medium")
 
     st.header("Columns")
     column_groups = util.getColumnsDict()
     group = st.selectbox("Select column group", list(column_groups.keys()), key = "column groups")
     selected_cols = column_groups[group]
     st.write("<p style=\"font-size: 20px;\">Columns in this group: ", ", ".join(selected_cols),"</p>" , unsafe_allow_html=True)
-    #<p style="font-size: 26px;">This text is 26px</p>
     st.space("large")
 
+    st.header("Missing Values")
+    fig = go.Figure()
+    
+    fig.add_bar(name='present', y=missingData.iloc[1], x=missingData.columns)
+    fig.add_bar(name='missing', y=missingData.iloc[0], x=missingData.columns)
+
+    fig.update_layout(barmode='stack')
+
+    st.plotly_chart(fig, use_container_width=True)
+        
     st.header("Citations")
     st.subheader("citedby-count statistic")
     st.dataframe(citations,hide_index=True)
