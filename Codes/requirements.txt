@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 streamlit
 matplotlib
 pandas
@@ -7,13 +6,3 @@ joblib
 networkx
 scikit-learn
 pathlib
-=======
-streamlit
-matplotlib
-pandas
-plotly
-joblib
-networkx
-scikit-learn
-pathlib
->>>>>>> 40fe4b26 (yay)
