@@ -73,7 +73,7 @@ def EDAPage():
     st.dataframe(citations,hide_index=True)
     st.space("small")
 
-    st.subheader("Relation between published year and citations")
+    st.subheader("Relation between publication year and citations")
     chart = st.selectbox("Chart" , ["Bar Chart", "Line Chart"])
     if(chart == "Bar Chart"):
         st.bar_chart(yearXcitations,y_label="citedby-count average",x_label="published year")
