@@ -388,4 +388,18 @@ def AiPage():
     st.subheader("AI Predictions:")
     st.write(f" Success Rate : {round(model.predict_proba(df)[0][1]*100 , 2)}%")
     st.write(f" The Paper is predicted to be {result[model.predict(df)[0]]}.")
+def ResearchQuestionPage():
+    st.title("Research Question")
+    _,indent = st.columns([1,9])
+    with indent:
+        st.subheader("Research Question")
+        _,indent2 = st.columns([1,9])
+        with indent2:
+            st.text("From only the paper’s metadata and textual descriptors, can we predict whether a research article will become ‘successful’.")
+            st.text("A paper is defined as ‘successful’ if its citedby-count exceeds the 75th percentile (P75) of all papers published in the same subject area in the same publication year.")
+        st.subheader("Answer")
+        _,indent3 = st.columns([1,9])
+        with indent3:
+            st.text("Yes, it is possible to predict whether a paper will be successful using only metadata. A simple logistic regression model achieves over 0.74 accuracy, with room for improvement in both data quality and model.")
+    
     
