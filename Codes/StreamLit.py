@@ -5,7 +5,7 @@ import datetime as dt
 import pages as pages
 
 
-edaTab, overviewTab, authorsTab , publishersTab , subjectAreaTab,countryTab,collaborationTab,aiOverviewTab, aiTab  = st.tabs(["EDA","Overview" , "Authors" , "Publishers","Subject Areas", "Countries", "Collaboration","AI Overview","AI"])
+edaTab, overviewTab, authorsTab , publishersTab , subjectAreaTab,countryTab,collaborationTab,aiOverviewTab, aiTab,researchQuestionTab= st.tabs(["EDA","Overview" , "Authors" , "Publishers","Subject Areas", "Countries", "Collaboration","AI Overview","AI", "Research Question"])
 
 with edaTab:
     pages.EDAPage()
@@ -25,3 +25,5 @@ with aiOverviewTab:
     pages.AiOverviewTab()
 with aiTab:
     pages.AiPage()
+with researchQuestionTab:
+    pages.ResearchQuestionPage()
