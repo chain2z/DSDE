@@ -50,7 +50,11 @@ unique_country = country_df["Country"].values
 
 def EDAPage():
     st.title("EDA")
-    st.text("Data Frame Shape : (20216, 27)")
+    st.space("medium")
+    st.subheader("Data Frame Shape")
+    c1,c2 = st.columns(2)
+    c1.metric("Rows" , value=20216); c2.metric("Columns" , value=27)
+    st.space("medium")
     st.header("Columns")
     column_groups = util.getColumnsDict()
     group = st.selectbox("Select column group", list(column_groups.keys()), key = "column groups")
@@ -70,10 +74,25 @@ def EDAPage():
         
     st.header("Citations")
     st.subheader("citedby-count statistic")
-    st.dataframe(citations,hide_index=True)
+    c1,c2,c3,_,c4,c5,c6 = st.columns([3,3,3,1,3,3,3])
+    with c1:
+        st.metric("Max" , round(citations.iloc[0,0],2))
+        st.metric("Missing" , round(citations.iloc[0,6],2))
+    with c2:
+        st.metric("Min" , round(citations.iloc[0,1],2))
+        st.metric("Present" , round(citations.iloc[0,7],2))
+    with c3:
+        st.metric("Mean" , round(citations.iloc[0,2],2))
+        st.metric("Outliers" , round(citations.iloc[0,8],2))
+    with c4:
+        st.metric("Median" , round(citations.iloc[0,3],2))
+    with c5:
+        st.metric("Mode" , round(citations.iloc[0,4],2))
+    with c6:
+       st.metric("SD" , round(citations.iloc[0,5],2))
     st.space("small")
 
-    st.subheader("Relationship between publication year and citations")
+    st.subheader("Relation between published year and citations")
     chart = st.selectbox("Chart" , ["Bar Chart", "Line Chart"])
     if(chart == "Bar Chart"):
         st.bar_chart(yearXcitations,y_label="citedby-count average",x_label="published year")
